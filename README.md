@@ -21,5 +21,5 @@ _Freesurfer longitudinal pipeline for T1 and T2 images_
 **RBTII_CAT12cs.m** \
 _CAT12 cross-sectional pipeline for T1 images_ \
 **RBTII_CAT12long.m** \
-_CAT12 longitudinal pipeline for T1 images_ \
+_CAT12 longitudinal pipeline for T1 images_
 
