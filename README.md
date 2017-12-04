@@ -1,4 +1,4 @@
-# RBTII
+# REBOOT-II scripts
 The page contains scripts used in REBOOT-II data analysis
 
 ## Freesurfer (v. 6.0)
