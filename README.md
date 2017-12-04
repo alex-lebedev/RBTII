@@ -2,7 +2,7 @@
 The page contains scripts used in REBOOT-II data analysis
 
 ## I. Behavioural data analysis
-*RBTII_dcleaning.R* \
+**RBTII_dcleaning.R** \
 _R-script for behavioural data cleaning_
 
 *RBTII_SEMmain.R*
