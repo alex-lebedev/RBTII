@@ -1,6 +1,9 @@
 # REBOOT-II scripts
 The page contains scripts used in REBOOT-II data analysis
 
+## STRUCTURAL EQUATION MODELING
+*RBTII_SEMmain.R* - R-script for SEM analysis of the primary and secondary behavioural end-points
+
 ## IMAGING
 #### Freesurfer (v. 6.0)
 *RBTII_FScs.tcsh* - Freesurfer cross-sectional pipeline for T1 and T2 images
