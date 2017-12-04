@@ -1,7 +1,7 @@
 # REBOOT-II scripts
 The page contains scripts used in REBOOT-II data analysis
 
-## .../BEHAVIOUR/
+## ... /BEHAVIOUR
 **RBTII_dcleaning.R** \
 _R-script for behavioural data cleaning_
 
@@ -9,7 +9,7 @@ _R-script for behavioural data cleaning_
 _R-script for SEM analysis of the primary and secondary behavioural end-points
 (incl. invariance assumption testing)_
 
-## .../IMAGING/
+## ... /IMAGING
 * ### Freesurfer (v. 6.0)
 **RBTII_FScs.tcsh** \
 _Freesurfer cross-sectional pipeline for T1 and T2 images_ \
