@@ -10,7 +10,7 @@ _R-script for SEM analysis of the primary and secondary behavioural end-points
 (incl. invariance assumption testing)_
 
 ## II. Imaging
-..* Freesurfer (v. 6.0)
+..* Freesurfer (v. 6.0) \
 **RBTII_FScs.tcsh** \
 _Freesurfer cross-sectional pipeline for T1 and T2 images_ \
 **RBTII_FSlong.tcsh** \
