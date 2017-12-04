@@ -5,9 +5,9 @@ The page contains scripts used in REBOOT-II data analysis
 **RBTII_dcleaning.R** \
 _R-script for behavioural data cleaning_
 
-*RBTII_SEMmain.R*
-R-script for SEM analysis of the primary and secondary behavioural end-points
-(incl. invariance assumption testing)
+**RBTII_SEMmain.R** \
+_R-script for SEM analysis of the primary and secondary behavioural end-points
+(incl. invariance assumption testing)_
 
 ## II. Imaging
 ### Freesurfer (v. 6.0)
