@@ -2,6 +2,7 @@
 The page contains scripts used in REBOOT-II data analysis
 
 ## I. Behavioural data analysis
+*RBTII_dcleaning.R* - R-script for behavioural data cleaning
 *RBTII_SEMmain.R* - R-script for SEM analysis of the primary and secondary behavioural end-points
 (incl. invariance assumption testing)
 
