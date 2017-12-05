@@ -1,5 +1,5 @@
 # REBOOT-II scripts
-The page contains scripts used in REBOOT-II data analysis
+Scripts used in REBOOT-II data analysis
 
 ## ... / BEHAVIOUR
 **RBTII_dcleaning.R** \
