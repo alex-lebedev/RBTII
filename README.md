@@ -23,3 +23,5 @@ _CAT12 cross-sectional pipeline for T1 images_ \
 **RBTII_CAT12long.m** \
 _CAT12 longitudinal pipeline for T1 images_
 
+## ... / SUPPLEMENT
+_Contains some supporting scripts used to produce summary scores and plots_
