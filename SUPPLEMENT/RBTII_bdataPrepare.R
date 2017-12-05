@@ -646,7 +646,7 @@ colnames(tsw) <- c('ID',
                    'v2.Acc.sw1.lvl456', 'v2.RT.sw1.lvl456',
                    'v3.Acc.sw0.lv789', 'v3.RT.sw0.lvl789', 
                    'v3.Acc.sw1.lv789', 'v3.RT.sw1.lvl789',
-                   'v1.trainedTSW.lvl23.cost','v2.trainedTSW.lvl23.cost','v3.trainedTSW.lvl23.cost',
+                   'v1.nearTSW.lvl23.cost','v2.nearTSW.lvl23.cost','v3.nearTSW.lvl23.cost',
                    'DATE.v0.lvl23', 'DATE.v2', 'DATE.v3','DATE-diff12', 'DATE-diff23',
                    'NumItPre.v0.lvl23','NumItPost.v0.lvl23','NumItPre.v2','NumItPost.v2','NumItPre.v3','NumItPost.v3')
 
@@ -667,38 +667,38 @@ for (i in 1:length(ids)) {
   tsw[i,'v1.RT.sw0.lvl23'] <- mean(tmpv1[tmpv1$switch==0 & (tmpv1$level==2 | tmpv1$level==3),'responsetime'])
   tsw[i,'v1.Acc.sw1.lvl23'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==2 | tmpv1$level==3),'answercorrect'])
   tsw[i,'v1.RT.sw1.lvl23'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==2 | tmpv1$level==3),'responsetime'])
-  tsw[i,'v1.trainedTSW.lvl23.cost'] <- tsw[i,'v1.RT.sw1.lvl23']-tsw[i,'v1.RT.sw0.lvl23']
+  tsw[i,'v1.nearTSW.lvl23.cost'] <- tsw[i,'v1.RT.sw1.lvl23']-tsw[i,'v1.RT.sw0.lvl23']
   
   tsw[i,'v1.Acc.sw0.lvl456'] <- mean(tmpv1[tmpv1$switch==0 & (tmpv1$level==4 | tmpv1$level==5 | tmpv1$level==6),'answercorrect'])
   tsw[i,'v1.RT.sw0.lvl456'] <- mean(tmpv1[tmpv1$switch==0 & (tmpv1$level==4 | tmpv1$level==5 | tmpv1$level==6),'responsetime'])
   tsw[i,'v1.Acc.sw1.lvl456'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==4 | tmpv1$level==5 | tmpv1$level==6),'answercorrect'])
   tsw[i,'v1.RT.sw1.lvl456'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==4 | tmpv1$level==5 | tmpv1$level==6),'responsetime'])
-  tsw[i,'v1.trainedTSW.lvl456.cost'] <- tsw[i,'v1.RT.sw1.lvl456']-tsw[i,'v1.RT.sw0.lvl456']
+  tsw[i,'v1.nearTSW.lvl456.cost'] <- tsw[i,'v1.RT.sw1.lvl456']-tsw[i,'v1.RT.sw0.lvl456']
   
   tsw[i,'v1.Acc.sw0.lvl789'] <- mean(tmpv1[tmpv1$switch==0 & (tmpv1$level==7 | tmpv1$level==8 | tmpv1$level==9),'answercorrect'])
   tsw[i,'v1.RT.sw0.lvl789'] <- mean(tmpv1[tmpv1$switch==0 & (tmpv1$level==7 | tmpv1$level==8 | tmpv1$level==9),'responsetime'])
   tsw[i,'v1.Acc.sw1.lvl789'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==7 | tmpv1$level==8 | tmpv1$level==9),'answercorrect'])
   tsw[i,'v1.RT.sw1.lvl789'] <- mean(tmpv1[tmpv1$switch==1 & (tmpv1$level==7 | tmpv1$level==8 | tmpv1$level==9),'responsetime'])
-  tsw[i,'v1.trainedTSW.lvl789.cost'] <- tsw[i,'v1.RT.sw1.lvl789']-tsw[i,'v1.RT.sw0.lvl789']
+  tsw[i,'v1.nearTSW.lvl789.cost'] <- tsw[i,'v1.RT.sw1.lvl789']-tsw[i,'v1.RT.sw0.lvl789']
   
   # Visit 2:
   tsw[i,'v2.Acc.sw0.lvl23'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==2 | tmpv2$level==3),'answercorrect'])
   tsw[i,'v2.RT.sw0.lvl23'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==2 | tmpv2$level==3),'responsetime'])
   tsw[i,'v2.Acc.sw1.lvl23'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==2 | tmpv2$level==3),'answercorrect'])
   tsw[i,'v2.RT.sw1.lvl23'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==2 | tmpv2$level==3),'responsetime'])
-  tsw[i,'v2.trainedTSW.lvl23.cost'] <- tsw[i,'v2.RT.sw1.lvl23']-tsw[i,'v2.RT.sw0.lvl23']
+  tsw[i,'v2.nearTSW.lvl23.cost'] <- tsw[i,'v2.RT.sw1.lvl23']-tsw[i,'v2.RT.sw0.lvl23']
   
   tsw[i,'v2.Acc.sw0.lvl456'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==4 | tmpv2$level==5 | tmpv2$level==6),'answercorrect'])
   tsw[i,'v2.RT.sw0.lvl456'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==4 | tmpv2$level==5 | tmpv2$level==6),'responsetime'])
   tsw[i,'v2.Acc.sw1.lvl456'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==4 | tmpv2$level==5 | tmpv2$level==6),'answercorrect'])
   tsw[i,'v2.RT.sw1.lvl456'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==4 | tmpv2$level==5 | tmpv2$level==6),'responsetime'])
-  tsw[i,'v2.trainedTSW.lvl456.cost'] <- tsw[i,'v2.RT.sw1.lvl456']-tsw[i,'v2.RT.sw0.lvl456']
+  tsw[i,'v2.nearTSW.lvl456.cost'] <- tsw[i,'v2.RT.sw1.lvl456']-tsw[i,'v2.RT.sw0.lvl456']
   
   tsw[i,'v2.Acc.sw0.lvl789'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==7 | tmpv2$level==8 | tmpv2$level==9),'answercorrect'])
   tsw[i,'v2.RT.sw0.lvl789'] <- mean(tmpv2[tmpv2$switch==0 & (tmpv2$level==7 | tmpv2$level==8 | tmpv2$level==9),'responsetime'])
   tsw[i,'v2.Acc.sw1.lvl789'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==7 | tmpv2$level==8 | tmpv2$level==9),'answercorrect'])
   tsw[i,'v2.RT.sw1.lvl789'] <- mean(tmpv2[tmpv2$switch==1 & (tmpv2$level==7 | tmpv2$level==8 | tmpv2$level==9),'responsetime'])
-  tsw[i,'v2.trainedTSW.lvl789.cost'] <- tsw[i,'v2.RT.sw1.lvl789']-tsw[i,'v2.RT.sw0.lvl789']
+  tsw[i,'v2.nearTSW.lvl789.cost'] <- tsw[i,'v2.RT.sw1.lvl789']-tsw[i,'v2.RT.sw0.lvl789']
   
   
   tsw[i,'DATE.v0.lvl23'] <- dates[1]
@@ -715,19 +715,19 @@ for (i in 1:length(ids)) {
     tsw[i,'v3.RT.sw0.lvl23'] <- mean(tmpv3[tmpv3$switch==0 & (tmpv3$level==2 | tmpv3$level==3),'responsetime'])
     tsw[i,'v3.Acc.sw1.lvl23'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==2 | tmpv3$level==3),'answercorrect'])
     tsw[i,'v3.RT.sw1.lvl23'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==2 | tmpv3$level==3),'responsetime'])
-    tsw[i,'v3.trainedTSW.lvl23.cost'] <- tsw[i,'v3.RT.sw1.lvl23']-tsw[i,'v3.RT.sw0.lvl23']
+    tsw[i,'v3.nearTSW.lvl23.cost'] <- tsw[i,'v3.RT.sw1.lvl23']-tsw[i,'v3.RT.sw0.lvl23']
     
     tsw[i,'v3.Acc.sw0.lvl456'] <- mean(tmpv3[tmpv3$switch==0 & (tmpv3$level==4 | tmpv3$level==5 | tmpv3$level==6),'answercorrect'])
     tsw[i,'v3.RT.sw0.lvl456'] <- mean(tmpv3[tmpv3$switch==0 & (tmpv3$level==4 | tmpv3$level==5 | tmpv3$level==6),'responsetime'])
     tsw[i,'v3.Acc.sw1.lvl456'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==4 | tmpv3$level==5 | tmpv3$level==6),'answercorrect'])
     tsw[i,'v3.RT.sw1.lvl456'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==4 | tmpv3$level==5 | tmpv3$level==6),'responsetime'])
-    tsw[i,'v3.trainedTSW.lvl456.cost'] <- tsw[i,'v3.RT.sw1.lvl456']-tsw[i,'v3.RT.sw0.lvl456']
+    tsw[i,'v3.nearTSW.lvl456.cost'] <- tsw[i,'v3.RT.sw1.lvl456']-tsw[i,'v3.RT.sw0.lvl456']
     
     tsw[i,'v3.Acc.sw0.lvl789'] <- mean(tmpv3[tmpv3$switch==0 & (tmpv3$level==7 | tmpv3$level==8 | tmpv3$level==9),'answercorrect'])
     tsw[i,'v3.RT.sw0.lvl789'] <- mean(tmpv3[tmpv3$switch==0 & (tmpv3$level==7 | tmpv3$level==8 | tmpv3$level==9),'responsetime'])
     tsw[i,'v3.Acc.sw1.lvl789'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==7 | tmpv3$level==8 | tmpv3$level==9),'answercorrect'])
     tsw[i,'v3.RT.sw1.lvl789'] <- mean(tmpv3[tmpv3$switch==1 & (tmpv3$level==7 | tmpv3$level==8 | tmpv3$level==9),'responsetime'])
-    tsw[i,'v3.trainedTSW.lvl789.cost'] <- tsw[i,'v3.RT.sw1.lvl789']-tsw[i,'v3.RT.sw0.lvl789']
+    tsw[i,'v3.nearTSW.lvl789.cost'] <- tsw[i,'v3.RT.sw1.lvl789']-tsw[i,'v3.RT.sw0.lvl789']
     
     tsw[i,'DATE.v3'] <- dates[3]
     tsw[i,'DATE-diff23'] <- as.numeric(dates[3]-dates[2])
