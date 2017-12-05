@@ -4,6 +4,7 @@
 
 # Authors: Alexander V. Lebedev & Martin Lovden
 # Date: 2017-12-04
+# Version for 3 indicators
 
 # Load Libraries:
 library(lavaan)
