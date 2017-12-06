@@ -29,7 +29,10 @@ excluded <- c('3035', '5037')
 #scogdat$v2.NBACKnear <- apply(scogdat[,c('near2back.OA.v2', 'near3back.OA.v2')],1, mean)
 
 # Uncomment for outlier removal:
-# scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F & cogdat_cleaned$PCAoutlier == 'No')
+scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F & cogdat_cleaned$PCAoutlier == 'No')
+scogdat$G[scogdat$group=='con'] <- 0
+scogdat$G[scogdat$group=='act'] <- 1
+scogdat$G <- as.factor(scogdat$G)
 
 # Calculate averaged updating performance:
 scogdat$v1.NearUPD <- apply(scogdat[,c('v1.nearUpd.count.lvl2', 'v1.nearUpd.count.lvl4')],1, mean)

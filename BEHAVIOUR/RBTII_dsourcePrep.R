@@ -1,16 +1,22 @@
-# Produce Source File:
+#########################
+# RBTII_dsourcePrep.R ###
+#########################
+# Author: Alexander V. Lebedev
+# Date: 2017-12-06
+
+# The script generates a source data.frame for subsequent leaning
 
 # Load libraries:
 library(xlsx)
 
-#excluded <- c('3035', '5037')
+
 # Define working directory:
 dir <- '/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/'
 
 
 # Load demographics data:
 load(paste(dir, 'demogr.rda', sep=''))
-
+#excluded <- c('3035', '5037') # excluded subjects
 
 # Start:
 
@@ -205,6 +211,8 @@ persdat <- merge(persdat, ceq, by='ID', all=T)
 
 persdat[,10:dim(persdat)[2]] <- apply(persdat[,10:dim(persdat)[2]],2,as.vector)
 persdat[,10:dim(persdat)[2]] <- apply(persdat[,10:dim(persdat)[2]],2,as.numeric)
+
+
 
 # Save source file:
 save('cogdat', 'persdat', file=paste(dir, 'sourcedat.rda', sep=''))
