@@ -6,7 +6,7 @@ Scripts used in REBOOT-II data analysis
 _R-script preparing source-data for cleaning_ \
 \
 **RBTII_dcleaning.R** \
-_R-script for behavioural data cleaning_
+_R-script for behavioural data cleaning_ \
 \
 **RBTII_SEMmain_3inds.R, RBTII_SEMmain_2inds.R** \
 _R-scripts for SEM analysis of the primary and secondary behavioural end-points
