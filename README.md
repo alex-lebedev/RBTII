@@ -3,7 +3,6 @@ Scripts used in REBOOT-II data analysis
 
 ## ... / BEHAVIOUR
 **RBTII_dsourcePrep.R** \
-\
 _R-script preparing source-data for cleaning_ \
 \
 **RBTII_dcleaning.R** \
