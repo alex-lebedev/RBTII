@@ -25,7 +25,7 @@ _CAT12 longitudinal pipeline for T1 images_
 _Freesurfer cross-sectional pipeline for T1 and T2 images_ \
 \
 **RBTII_FSlong.tcsh** \
-_Freesurfer longitudinal pipeline for T1 and T2 images_\
+_Freesurfer longitudinal pipeline for T1 and T2 images_ \
 
 ## ... / SUPPLEMENT
 _Contains some supporting scripts used to produce summary scores and plots_
