@@ -21,18 +21,31 @@ scogdat$v2.NearUPD <- apply(scogdat[,c('v2.nearUpd.count.lvl2', 'v2.nearUpd.coun
 scogdat$v1.TrainedUPD <- apply(scogdat[,c('v1.trainedUpd.count.lvl2', 'v1.trainedUpd.count.lvl4')],1, mean)
 scogdat$v2.TrainedUPD <- apply(scogdat[,c('v2.trainedUpd.count.lvl2', 'v2.trainedUpd.count.lvl4')],1, mean)
 
+# UPDATING:
 #dat <- scogdat[,c('G','v1.NearUPD', 'v2.NearUPD', 'near3back.OA.v1', 'near3back.OA.v2')]
 #dat <- scogdat[,c('G','v1.TrainedUPD', 'v2.TrainedUPD', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-#dat <- scogdat[,c('G','v1.nearRSW1.cost', 'v2.nearRSW1.cost', 'v1.nearRSW2.cost', 'v2.nearRSW2.cost')]
-#dat <- scogdat[,c('G','v1.trainedTSW.lvl23.cost', 'v2.trainedTSW.lvl23.cost', 'v1.trainedTSW.lvl456.cost', 'v2.trainedTSW.lvl456.cost', 'v1.trainedTSW.lvl789.cost', 'v2.trainedTSW.lvl789.cost')]
+#x1 <- log1p(as.numeric(as.vector(dat[,2])))
+#x2 <- log1p(as.numeric(as.vector(dat[,3])))
 
 
 
+# RULE-SWITCHING:
+dat <- scogdat[,c('G','v1.nearRSW1.cost', 'v2.nearRSW1.cost', 'v1.nearRSW2.cost', 'v2.nearRSW2.cost')]
 x1 <- as.numeric(as.vector(dat[,2]))
 x2 <- as.numeric(as.vector(dat[,3]))
-
 y1 <- as.numeric(as.vector(dat[,4]))
 y2 <- as.numeric(as.vector(dat[,5]))
+
+x2 <- log1p(x2-min(na.exclude(x2)))
+x1 <- log1p(x1-min(na.exclude(x1)))
+y2 <- log1p(y2-min(na.exclude(y2)))
+y1 <- log1p(y1-min(na.exclude(y1)))
+
+# Default:
+#x1 <- as.numeric(as.vector(dat[,2]))
+#x2 <- as.numeric(as.vector(dat[,3]))
+#y1 <- as.numeric(as.vector(dat[,4]))
+#y2 <- as.numeric(as.vector(dat[,5]))
 
 
 
@@ -51,6 +64,10 @@ comp2 <- apply(tmp2, 1,mean)
 t.test(comp1[dat$G==0],comp1[dat$G==1])
 t.test(comp2[dat$G==0]-comp1[dat$G==0],comp2[dat$G==1]-comp1[dat$G==1])
 
+ddd <- data.frame(ID=as.factor(rep(scogdat$ID,2)), group=as.factor(rep(dat$G,2)), visit=as.factor(c(rep('vis1',62),rep('vis2',62))), var=as.numeric(c(comp1,comp2)))
+ddd <- na.exclude(ddd)
+modME <- lme(var~group*visit,data=ddd, random=~1|ID)
+summary(modME)
 
 
 
@@ -68,7 +85,7 @@ t.test(comp2[dat$G==0]-comp1[dat$G==0],comp2[dat$G==1]-comp1[dat$G==1])
 G <- dat$G
 work <- as.data.frame(cbind(x1,x2,y1,y2,G))
 #work <- work[complete.cases(work),]
-work$G <- as.factor(work$G)
+work$G <- as.factor(G)
 
 # I. Model Specification:
 

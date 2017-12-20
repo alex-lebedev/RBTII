@@ -10,6 +10,7 @@
 library(lavaan)
 library(xlsx)
 library(ggplot2)
+library(nlme)  
 
 # Set working directory:
 dir = '/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/'
@@ -40,30 +41,50 @@ scogdat$v2.NearUPD <- apply(scogdat[,c('v2.nearUpd.count.lvl2', 'v2.nearUpd.coun
 scogdat$v1.TrainedUPD <- apply(scogdat[,c('v1.trainedUpd.count.lvl2', 'v1.trainedUpd.count.lvl4')],1, mean)
 scogdat$v2.TrainedUPD <- apply(scogdat[,c('v2.trainedUpd.count.lvl2', 'v2.trainedUpd.count.lvl4')],1, mean)
 
+
+# REASONING:
 dat <- scogdat[,c('G','v1.rav', 'v2.rav', 'v1.beta', 'v2.beta', 'v1.wasi', 'v2.wasi')]
 #dat <- scogdat[,c('G','v1.anl.transf.3root', 'v2.anl.transf.3root', 'v1.syll', 'v2.syll', 'v1.vinf', 'v2.vinf')]
-#dat <- scogdat[,c('G','v1.NearUPD', 'v2.NearUPD', 'near2back.OA.v1.transf.cubed', 'near2back.OA.v2.transf.cubed', 'near3back.OA.v1', 'near3back.OA.v2')]
-#dat <- scogdat[,c('G','v1.TrainedUPD', 'v2.TrainedUPD', 'trained2back.OA.v1.transf.cubed', 'trained2back.OA.v2.transf.cubed', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-#dat <- scogdat[,c('G','v1.nearRSW1.cost', 'v2.nearRSW1.cost', 'v1.nearRSW2.cost', 'v2.nearRSW2.cost', 'v1.nearTSW.cost', 'v2.nearTSW.cost')]
-#dat <- scogdat[,c('G','v1.trainedTSW.lvl23.cost', 'v2.trainedTSW.lvl23.cost', 'v1.trainedTSW.lvl456.cost', 'v2.trainedTSW.lvl456.cost', 'v1.trainedTSW.lvl789.cost', 'v2.trainedTSW.lvl789.cost')]
-
-
-#dat <- scogdat[,c('G','v1.trainedTSW.lvl23.cost', 'v2.trainedTSW.lvl23.cost', 'v1.trainedTSW.lvl456.cost', 'v2.trainedTSW.lvl456.cost', 'v1.trainedTSW.lvl789.cost', 'v2.trainedTSW.lvl789.cost')]
-#dat <- scogdat[,c('G','near3back.OA.v1', 'near3back.OA.v2', 'trained3back.OA.v1', 'trained3back.OA.v2', 'near2back.OA.v1', 'near2back.OA.v2')]
-#dat <- cogdat[,c('G','v1.NUPD', 'v2.NUPD', 'near2back.OA.v1', 'near2back.OA.v2', 'near3back.OA.v1', 'near3back.OA.v2')]
-#dat <- cogdat[,c('G','v1.TUPD', 'v2.TUPD', 'trained2back.OA.v1', 'trained2back.OA.v2', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-#dat <- scogdat[,c('G','v1.TUPD', 'v2.TUPD', 'trained2back.OA.v1', 'trained2back.OA.v2', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-# dat <- cogdat[,c('G','v1.rsw1.cost', 'v2.rsw1.cost', 'v1.rsw2.cost', 'v2.rsw2.cost', 'v1.fl1.cost', 'v2.fl1.cost')]
 
 x1 <- as.numeric(as.vector(dat[,2]))
 x2 <- as.numeric(as.vector(dat[,3]))
-
 y1 <- as.numeric(as.vector(dat[,4]))
 y2 <- as.numeric(as.vector(dat[,5]))
-
 z1 <- as.numeric(as.vector(dat[,6]))
 z2 <- as.numeric(as.vector(dat[,7]))
 
+
+# TRAINED TASK-SWITCHING:
+#dat <- scogdat[,c('G','v1.trainedTSW.lvl23.cost', 'v2.trainedTSW.lvl23.cost', 'v1.trainedTSW.lvl456.cost', 'v2.trainedTSW.lvl456.cost', 'v1.trainedTSW.lvl789.cost', 'v2.trainedTSW.lvl789.cost')]
+x1 <- as.numeric(as.vector(dat[,2]))
+x2 <- as.numeric(as.vector(dat[,3]))
+y1 <- as.numeric(as.vector(dat[,4]))
+y2 <- as.numeric(as.vector(dat[,5]))
+z1 <- as.numeric(as.vector(dat[,6]))
+z2 <- as.numeric(as.vector(dat[,7]))
+x2 <- (x2-min(na.exclude(x2)))^1/2
+x1 <- (x1-min(na.exclude(x1)))^1/2
+y2 <- (y2-min(na.exclude(y2)))^1/2
+y1 <- (y1-min(na.exclude(y1)))^1/2
+z2 <- (z2-min(na.exclude(z2)))^1/2
+z1 <- (z1-min(na.exclude(z1)))^1/2
+
+# NEAR TASK-SWITCHING:
+#dat <- scogdat[,c('G','v1.nearTSW.lvl23.cost', 'v2.nearTSW.lvl23.cost', 'v1.nearTSW.lvl456.cost', 'v2.nearTSW.lvl456.cost', 'v1.nearTSW.lvl789.cost', 'v2.nearTSW.lvl789.cost')]
+x1 <- as.numeric(as.vector(dat[,2]))
+x2 <- as.numeric(as.vector(dat[,3]))
+y1 <- as.numeric(as.vector(dat[,4]))
+y2 <- as.numeric(as.vector(dat[,5]))
+z1 <- as.numeric(as.vector(dat[,6]))
+z2 <- as.numeric(as.vector(dat[,7]))
+x2 <- log1p(x2-min(na.exclude(x2)))
+x1 <- log1p(x1-min(na.exclude(x1)))
+y2 <- log1p(y2-min(na.exclude(y2)))
+y1 <- log1p(y1-min(na.exclude(y1)))
+z2 <- log1p(z2-min(na.exclude(z2)))
+z1 <- log1p(z1-min(na.exclude(z1)))
+
+###
 
 x1s <- (x1-mean(x1, na.rm=T))/sd(x1, na.rm=T)
 x2s <- (x2-mean(x1, na.rm=T))/sd(x1, na.rm=T)
@@ -81,7 +102,11 @@ comp2 <- apply(tmp2, 1,mean)
 
 t.test(comp1[dat$G==0],comp1[dat$G==1])
 t.test(comp2[dat$G==0]-comp1[dat$G==0],comp2[dat$G==1]-comp1[dat$G==1])
-  
+
+ddd <- data.frame(ID=as.factor(rep(scogdat$ID,2)), group=as.factor(rep(dat$G,2)), visit=as.factor(c(rep('V1',62),rep('V2',62))), var=as.numeric(c(comp1,comp2)))
+ddd <- na.exclude(ddd)
+modME <- lme(var~group*visit,data=ddd, random=~1|ID)
+summary(modME)
 
 ###############################
 
