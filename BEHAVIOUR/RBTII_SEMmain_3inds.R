@@ -352,11 +352,10 @@ fm2 <- sem(m2, data=work, estimator='ml', missing='FIML')
 fm3 <- sem(m3, data=work, estimator='ml', missing='FIML')
 fm4 <- sem(m4, data=work, estimator='ml', missing='FIML')
 
-summary(fm1, fit.measures=TRUE, standardized=TRUE)
-summary(fm2, fit.measures=TRUE, standardized=TRUE)
-summary(fm3, fit.measures=TRUE, standardized=TRUE)
-summary(fm4, fit.measures=TRUE, standardized=TRUE)
-
+#summary(fm1, fit.measures=TRUE, standardized=TRUE)
+#summary(fm2, fit.measures=TRUE, standardized=TRUE)
+#summary(fm3, fit.measures=TRUE, standardized=TRUE)
+#summary(fm4, fit.measures=TRUE, standardized=TRUE)
 
 #To run chi2 diff tests
 anova(fm1,fm2,fm3,fm4) # based on Chisq

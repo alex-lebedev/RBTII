@@ -15,6 +15,9 @@ excluded <- c('3035', '5037')
 #excluded <- c('3035', '5037', '5069')
 #scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F & cogdat_cleaned$PCAoutlier == 'No')
 scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F)
+scogdat$G[scogdat$group=='con'] <- 0
+scogdat$G[scogdat$group=='act'] <- 1
+scogdat$G <- as.factor(scogdat$G)
 
 scogdat$v1.NearUPD <- apply(scogdat[,c('v1.nearUpd.count.lvl2', 'v1.nearUpd.count.lvl4')],1, mean)
 scogdat$v2.NearUPD <- apply(scogdat[,c('v2.nearUpd.count.lvl2', 'v2.nearUpd.count.lvl4')],1, mean)
@@ -24,9 +27,10 @@ scogdat$v2.TrainedUPD <- apply(scogdat[,c('v2.trainedUpd.count.lvl2', 'v2.traine
 # UPDATING:
 #dat <- scogdat[,c('G','v1.NearUPD', 'v2.NearUPD', 'near3back.OA.v1', 'near3back.OA.v2')]
 #dat <- scogdat[,c('G','v1.TrainedUPD', 'v2.TrainedUPD', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-#x1 <- log1p(as.numeric(as.vector(dat[,2])))
-#x2 <- log1p(as.numeric(as.vector(dat[,3])))
-
+x1 <- log1p(as.numeric(as.vector(dat[,2])))
+x2 <- log1p(as.numeric(as.vector(dat[,3])))
+y1 <- as.numeric(as.vector(dat[,4]))
+y2 <- as.numeric(as.vector(dat[,5]))
 
 
 # RULE-SWITCHING:
