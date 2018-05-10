@@ -31,14 +31,12 @@ thld=thlds(t);
       adjMrs1(:,:,i)= corrcoef(ROISignals(:,ind));
       %adjMrs1(adjMrs1<thld)=0;
       str1(i,:) = strengths_und(adjMrs1(:,:,i));
-    [Ppos1(i,:) Pneg1(i,:)] = participation_coef_sign(adjMrs1(:,:,i),CI);     
     clear ROISignals
       %%%%%%%%%%%%%%%
       load(mfliesRS2{i})
       adjMrs2(:,:,i)= corrcoef(ROISignals(:,ind)); 
       %adjMrs2(adjMrs2<thld)=0;
       str2(i,:) = strengths_und(adjMrs2(:,:,i));
-      [Ppos2(i,:) Pneg2(i,:)] = participation_coef_sign(adjMrs2(:,:,i),CI);
       clear ROISignals
       %%%%%%%%%%%%%%%
     end

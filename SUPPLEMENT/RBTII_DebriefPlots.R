@@ -11,6 +11,8 @@ nb <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_
 tsw <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_tsw.xlsx',1)
 upd <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_upd.xlsx',1)
 
+nb1[,3:dim(nb1)[2]] <- apply(nb1[,3:dim(nb1)[2]],2,as.numeric)
+
 # Read randomization data for a relevant wave:
 rand <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave3.xlsx',1)
 

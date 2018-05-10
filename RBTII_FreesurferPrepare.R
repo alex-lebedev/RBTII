@@ -5,7 +5,6 @@ library(xlsx)
 library(ggplot2)
 
 dir = '/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/'
-#dir = '/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-23/summary/'
 
 load(paste(dir, 'cogdat_cleaned.rda', sep=''))
 

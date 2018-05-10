@@ -39,10 +39,10 @@ date2 <- as.Date("2018-06-18") # till
 ###############
 
 # If column names are present:
-nback <-  read.csv2(paste(dir, 'nback_run_06_09.csv', sep=''), header=T)
+nback <-  read.csv2(paste(dir, 'nback_run.csv', sep=''), header=T)
 
 # If w/o column names:
-#nback <- read.csv2(paste(dir, 'nback_run_06_09.csv', sep=''), header=F)
+#nback <- read.csv2(paste(dir, 'nback_run.csv', sep=''), header=F)
 #colnames(nback) <- c("id","date","level","run","cr","fr","dv","levelpassed")
 
 nback <- nback[which(nchar(nback$id)>3),]
@@ -117,9 +117,9 @@ for (i in 1:length(ids)) {
 ### Task-switching: ###
 #######################
 
-tswitch <-  read.csv2(paste(dir, 'taskswitching_run_06_09.csv', sep=''), header=T)
+tswitch <-  read.csv2(paste(dir, 'taskswitching_run.csv', sep=''), header=T)
 # If w/o column names:
-#tswitch <-  read.csv2(paste(dir, 'taskswitching_run_06_09.csv', sep=''), header=F)
+#tswitch <-  read.csv2(paste(dir, 'taskswitching_run.csv', sep=''), header=F)
 #colnames(tswitch) <- c("id","date","level","run","cr","fr","dv","levelpassed")
 
 tswitch <- tswitch[which(nchar(tswitch$id)>3),]
@@ -196,9 +196,9 @@ for (i in 1:length(ids)) {
 ### Updating: ###
 #################
 
-updating <- read.csv2(paste(dir, 'updating_run_06_09.csv', sep=''), header=T)
+updating <- read.csv2(paste(dir, 'updating_run.csv', sep=''), header=T)
 # If w/o column names:
-#updating <- read.csv2(paste(dir, 'updating_run_06_09.csv', sep=''), header=F)
+#updating <- read.csv2(paste(dir, 'updating_run.csv', sep=''), header=F)
 #colnames(tswitch) <- c("id","date","level","run","cr","fr","dv","levelpassed")
 
 updating <- updating[which(nchar(updating$id)>3),]
@@ -275,8 +275,10 @@ for (i in 1:length(ids)) {
 rand1 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave1.xlsx',1)
 rand2 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave2.xlsx',1)
 rand3 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave3.xlsx',1)
+rand4 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave4.xlsx',1)
+rand5 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave5.xlsx',1)
 
-rand <- rbind(rand1,rand2)
+rand <- rbind(rand1,rand2,rand3,rand4,rand5)
 
 
 boxplot(nb[is.element(nb$ID,rand$stuID[rand$group=='con']),2:5],col=color[1])
@@ -285,9 +287,9 @@ boxplot(nb[is.element(nb$ID,rand$stuID[rand$group=='act']),2:5],col=color[2], ad
 t.test(tsw[is.element(tsw$ID,rand$stuID[rand$group=='con']),3],tsw[is.element(tsw$ID,rand$stuID[rand$group=='act']),3])
 
 
-write.xlsx2('nb', file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_nb.xlsx')
-write.xlsx2('tsw', file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_tsw.xlsx')
-write.xlsx2('upd', file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_upd.xlsx')
+write.xlsx(nb, file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_nb.xlsx')
+write.xlsx(tsw, file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_tsw.xlsx')
+write.xlsx(upd, file='/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_upd.xlsx')
 
 # Plot feedback:
 # Reorganize the data:

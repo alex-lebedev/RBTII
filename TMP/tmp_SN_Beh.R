@@ -6,8 +6,7 @@ library(RColorBrewer)
 # Generate nice palette:
 color <- brewer.pal(n = 8, "Dark2")
 
-SN <- readMat('/Volumes/REBOOTII/RBTII/ANALYSIS/GMV/FullFact/SNextracted.mat')$SN
-gmv <- SN$y.struct[,,1]$Y
+gmv <- readMat('/Volumes/REBOOTII/RBTII/ANALYSIS/GMV/FINAL/FullFact_cleaned/STN_vol_F.mat')$Y
 
 
 group <- c(rep(rep('con',27),2),rep(rep('act',28),2))
@@ -38,9 +37,14 @@ boxplot(subset(gmvdat$res, gmvdat$group=='con' & gmvdat$visit=='V1'),
 
 
 
-gmvdat$ID <- as.factor(rep(c('1049', '1065', '1081', '1113', '1129', '2050', '2066', '2114', '2130', '2178', '3003', '3019', '3051', '3131', '3147', '4004', '4036', '4084', '4116', '4148', '4180', '5069', '5117', '5133', '5149', '5165', '5181'),2),
-rep(c('1001', '1017', '1097', '1145', '1161', '2002', '2034', '2098', '2194', '2210', '2226', '3067', '3083', '3099', '3115', '3163', '4052', '4068', '4100', '4132', '4164', '4228', '5005', '5053', '5085', '5101', '5197', '5213'),2))
-
+gmvdat$ID <- as.factor(c(rep(c('1049', '1065', '1081', '1113', '1129', '2050', '2066', '2114', 
+                               '2130', '2178', '3003', '3019', '3051', '3131', '3147', '4004', 
+                               '4036', '4084', '4116', '4148', '4180', '5069', '5117', '5133', 
+                               '5149', '5165', '5181'),2),
+                         rep(c('1001', '1017', '1097', '1145', '1161', '2002', '2034', '2098', 
+                               '2194', '2210', '2226', '3067', '3083', '3099', '3115', '3163', 
+                               '4052', '4068', '4100', '4132', '4164', '4228', '5005', '5053', 
+                               '5085', '5101', '5197', '5213'),2)))
 
 
 
@@ -50,6 +54,7 @@ dir = '/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/'
 
 # Load data:
 load(paste(dir, 'cogdat_cleaned.rda', sep=''))
+excluded <- c('3035', '5037')
 
 
 # Uncomment for outlier removal:
@@ -66,7 +71,7 @@ scogdat$v2.TrainedUPD <- apply(scogdat[,c('v2.trainedUpd.count.lvl2', 'v2.traine
 
 
 # REASONING:
-dat <- scogdat[,c('ID','G','v1.rav', 'v2.rav', 'v1.beta', 'v2.beta', 'v1.wasi', 'v2.wasi')]
+dat <- scogdat[,c('G','v1.rav', 'v2.rav', 'v1.beta', 'v2.beta', 'v1.wasi', 'v2.wasi', 'ID')]
 x1 <- as.numeric(as.vector(dat[,2]))
 x2 <- as.numeric(as.vector(dat[,3]))
 y1 <- as.numeric(as.vector(dat[,4]))
@@ -134,30 +139,56 @@ cor(c(s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']),c(s1$SR[s1$visit=='V2']
 cor(c(s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']),c(s1$tTSW[s1$visit=='V2']-s1$tTSW[s1$visit=='V1']), use='complete')
 
 # Plot:
+SNvolume.change <- ddd_tot$SNvol[s1$visit=='V2']-ddd_tot$SNvol[ddd_tot$visit=='V1']
+Performance.change <- ddd_tot$SR[s1$visit=='V2']-ddd_tot$SR[ddd_tot$visit=='V1']
+plot(SNvolume.change,Performance.change, col=color[1], pch=17, cex=2.5, type='n', cex.axis=2)
+abline(summary(glm(Performance.change~SNvolume.change)),col='darkgrey', lwd=8)
+cor(SNvolume.change, Performance.change)
+summary(glm(Performance.change~SNvolume.change))$coeff
+
 s1 <- subset(ddd_tot, ddd_tot$group=='con')
 SNvolume.change <- s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']
 Performance.change <- s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']
-plot(SNvolume.change,Performance.change, col=color[1], pch=17, cex=1.5)
-abline(summary(glm(Performance.change~SNvolume.change)),col=color[1], lwd=5)
+points(SNvolume.change,Performance.change, col=1, pch=2, cex=5)
+cor(SNvolume.change, Performance.change)
 
 s1 <- subset(ddd_tot, ddd_tot$group=='act')
 SNvolume.change <- s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']
 Performance.change <- s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']
-points(SNvolume.change,Performance.change, col=color[2], pch=16, cex=1.5, add=T)
-abline(summary(glm(Performance.change~SNvolume.change)),col=color[2], lwd=5, add=T)
-legend(0.022,4, legend=c('con', 'act'), pch=c(17,16),col=c(color[1], color[2]), cex=1.5)
+points(SNvolume.change,Performance.change, col=1, pch=16, cex=6)
+cor(SNvolume.change, Performance.change)
+
 
 
 
 # Plot between-group difference in change:
-
+library(ggplot2)
 var1 <- 'v1.rav'
 var2 <- 'v2.rav'
 
 dat_long <- data.frame(ID=as.factor(rep(scogdat$ID, 2)),
-                       G=as.factor(rep(scogdat$group, 2)),
+                       group=as.factor(rep(scogdat$group, 2)),
                        visit=as.factor(c(rep('V1',dim(scogdat)[1]),rep('V2',dim(scogdat)[1]))),
                        beh=c(scogdat[,var1],scogdat[,var2]))
 p <- ggplot(data = dat_long, aes(x = visit, y = beh, group = ID))
-p + geom_line(aes(color= G)) + stat_smooth(aes(group = G)) + stat_summary(aes(group = G, color=G, shape = G), 
-                                                                          geom = "point", fun.y = mean, size = 5)
+p + geom_line(aes(linetype= group),colour='darkgrey')  + stat_smooth(aes(group = group, linetype= group),colour='black', size=3) +
+  stat_summary(aes(group = group, shape = group),geom = "point", fun.y = mean, size = 6)+ theme_bw() +
+  theme(axis.text=element_text(size=20), axis.title.x=element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.border = element_blank(),axis.text.x=element_blank(), axis.ticks.x=element_blank())  +
+  ylab("COG")
+
+
+ddd_tot$shape <- NA
+ddd_tot$shape[ddd_tot$group=='con'] <- 2
+ddd_tot$shape[ddd_tot$group=='act'] <- 16
+
+ddd_tot$shape <- as.factor(ddd_tot$shape)
+# STN Volume:
+p <- ggplot(data = ddd_tot, aes(x = visit, y = SNvol, group = ID))
+p + geom_line(aes(linetype= group),colour='darkgrey')  + stat_smooth(aes(group = group, linetype= group),colour='black', size=3) +
+  stat_summary(aes(group = group),shape=c(rep(16,2),rep(2,2)), geom = "point", fun.y = mean, size = 9)+ theme_bw() +
+  theme(axis.text=element_text(size=20), axis.title.x=element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.border = element_blank(),axis.text.x=element_blank(), axis.ticks.x=element_blank())  +
+  ylab("GMV")

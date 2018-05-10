@@ -1,5 +1,5 @@
 # Prepare a list of files:
-nbfolder <- '/Volumes/REBOOTII/RBTII/inScannerTasks_2017-11-25/nback-cleaned-2017-11-25/'
+nbfolder <- '/Volumes/REBOOTII/RBTII/nback-cleaned-2017-11-25/'
 
 
 nblist <- list.files(path=nbfolder, pattern="*.csv") 
@@ -104,7 +104,7 @@ for (i in 1:dim(nbScanner)[1]){
 
 
 nbScanner <- cbind(as.numeric(strtrim(nblist_v1,4)),nbScanner)
-colnames(nbScanner) <- c('StudyID','oa1', 'oa2', 'oa3', 'oa11', 'oa12', 'oa13', 'oa21', 'oa22', 'oa23', 'oa31', 'oa32', 'oa33',
+colnames(nbScanner) <- c('ID','oa1', 'oa2', 'oa3', 'oa11', 'oa12', 'oa13', 'oa21', 'oa22', 'oa23', 'oa31', 'oa32', 'oa33',
                          'sens11','sens12','sens13','spec11','spec12','spec13','SimpAcc11',
                          'SimpAcc12','SimpAcc13','sens21','sens22','sens23','spec21','spec22',
                          'spec23','SimpAcc21','SimpAcc22','SimpAcc23','sens31','sens32','sens33',
@@ -310,7 +310,7 @@ for (i in 73:dim(nbScanner)[1]) {
 
 
 nbScanner <- cbind(as.numeric(strtrim(nblist_v2,4)),nbScanner)
-colnames(nbScanner) <- c('StudyID','oa1', 'oa2', 'oa3', 'oa11', 'oa12', 'oa13', 'oa21', 'oa22', 'oa23', 'oa31', 'oa32', 'oa33',
+colnames(nbScanner) <- c('ID','oa1', 'oa2', 'oa3', 'oa11', 'oa12', 'oa13', 'oa21', 'oa22', 'oa23', 'oa31', 'oa32', 'oa33',
                          'sens11','sens12','sens13','spec11','spec12','spec13','SimpAcc11',
                          'SimpAcc12','SimpAcc13','sens21','sens22','sens23','spec21','spec22',
                          'spec23','SimpAcc21','SimpAcc22','SimpAcc23','sens31','sens32','sens33',
@@ -322,11 +322,67 @@ nbScannerV2 <- nbScanner
 
 
 # MERGE:
-nbScanner <- merge(nbScannerV1[,1:4], nbScannerV2[,1:4], by='StudyID')
+nbScanner <- merge(nbScannerV1[,1:4], nbScannerV2[,1:4], by='ID')
+#save()
 
-colnames(nbScanner)[1] <- 'ID'
-dd <- as.data.frame(scogdat[c('ID', 'group')]);  dat <- merge(nbScanner, dd, by='ID')
-t.test(c(dat$oa3.y[dat$group=='con']-dat$oa3.x[dat$group=='con']),c(dat$oa3.y[dat$group=='act']-dat$oa3.x[dat$group=='act']))
-t.test(c(dat$oa2.y[dat$group=='con']-dat$oa2.x[dat$group=='con']),c(dat$oa2.y[dat$group=='act']-dat$oa2.x[dat$group=='act']))
-t.test(c(dat$oa1.y[dat$group=='con']-dat$oa1.x[dat$group=='con']),c(dat$oa1.y[dat$group=='act']-dat$oa1.x[dat$group=='act']))
+
+
+# ANALYSIS:
+# REASONING:
+# Load cleaned source data:
+load('/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/cogdat_cleaned.rda')
+scogdat <- cogdat_cleaned
+dat <- scogdat[,c('group','v1.rav', 'v2.rav', 'v1.beta', 'v2.beta', 'v1.wasi', 'v2.wasi', 'ID')]
+x1 <- as.numeric(as.vector(dat[,2]))
+x2 <- as.numeric(as.vector(dat[,3]))
+y1 <- as.numeric(as.vector(dat[,4]))
+y2 <- as.numeric(as.vector(dat[,5]))
+z1 <- as.numeric(as.vector(dat[,6]))
+z2 <- as.numeric(as.vector(dat[,7]))
+x1s <- (x1-mean(x1, na.rm=T))/sd(x1, na.rm=T)
+x2s <- (x2-mean(x1, na.rm=T))/sd(x1, na.rm=T)
+y1s <- (y1-mean(y1, na.rm=T))/sd(y1, na.rm=T)
+y2s <- (y2-mean(y1, na.rm=T))/sd(y1, na.rm=T)
+z1s <- (z1-mean(z1, na.rm=T))/sd(z1, na.rm=T)
+z2s <- (z2-mean(z1, na.rm=T))/sd(z1, na.rm=T)
+tmp1 <- cbind(x1s,y1s,z1s)
+tmp2 <- cbind(x2s,y2s,z2s)
+comp1 <- apply(tmp1, 1,mean)
+comp2 <- apply(tmp2, 1,mean)
+
+
+dat$SI1<- comp1
+dat$SI2<- comp2
+dat <- dat[,c('ID','group', 'SI1', 'SI2')]
+
+
+ddd <- merge(dat, nbScanner, by='ID')
+
+
+cor(ddd[complete.cases(ddd),3:10])
+
+t.test(c(ddd$oa3.y[ddd$group=='con']-ddd$oa3.x[ddd$group=='con']),
+       c(ddd$oa3.y[ddd$group=='act']-ddd$oa3.x[ddd$group=='act']))
+
+t.test(c(ddd$oa2.y[ddd$group=='con']-ddd$oa2.x[ddd$group=='con']),
+       c(ddd$oa2.y[ddd$group=='act']-ddd$oa2.x[ddd$group=='act']))
+
+t.test(c(ddd$oa1.y[ddd$group=='con']-ddd$oa1.x[ddd$group=='con']),
+       c(ddd$oa1.y[ddd$group=='act']-ddd$oa1.x[ddd$group=='act']))
+
+
+d <- data.frame(ID = rep(ddd$ID, 6), group=rep(ddd$group,6),
+                visit=c(rep('V1', length(ddd$oa1.x)*3),rep('V2', length(ddd$oa1.x)*3)),
+                load = rep(c(rep(1,length(ddd$oa1.x)),rep(2,length(ddd$oa1.x)),rep(3,length(ddd$oa1.x))),2),
+  perf = c(ddd$oa1.x,ddd$oa2.x, ddd$oa3.x,ddd$oa1.y,ddd$oa2.y, ddd$oa3.y))
+                
+
+nback_scanner = d
+
+save(nback_scanner, file='/Volumes/REBOOTII/RBTII/nback_scanner-2017-11-25.rda')
+
+summary(glm(perf~group*load*visit, data=d))
+
+modME <- lme(perf~group*load*visit,data=d, random=~1|ID)
+summary(modME)
 

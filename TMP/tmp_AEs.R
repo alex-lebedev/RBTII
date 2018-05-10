@@ -1,11 +1,13 @@
 # AEs and QoL:
 
 library(xlsx)
+library(reshape)
+library(ggplot2)
 
 load('/Users/alebedev/Documents/R/REBOOT2/BEHAVIOR/2017-11-29/summary/demogr.rda')
 
 # AEs:
-aes <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/AEs.xlsx',1)
+aes <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/CRFdata/AEs.xlsx',1)
 #aes <- subset(aes, aes$Relationship.with.IMP!='no')
 aedat <- cbind(names(table(aes$Subject.number)),table(aes$Subject.number))
 
@@ -105,7 +107,7 @@ diary <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/CRFdata/K
 ids <- names(table(diary$StudieID))
 ids <- ids[2:length(ids)]
 
-item <- as.data.frame(matrix(NA, length(ids), 6))
+item <- as.data.frame(matrix(NA, length(ids),  max(table(diary$StudieID))))
 
 colnames(item)<- 1:6
 n=4
@@ -135,4 +137,31 @@ modFE <- glm(value~group*variable,data=mdata, na.action=na.exclude)
 summary(modFE)
 colnames(diary)[n]
 
+# Humor:
+ids <- names(table(humor$StudieID))
+item <- as.data.frame(matrix(NA, length(ids),  max(table(humor$StudieID))))
+colnames(item)<- 1:6
+n=4
+for (i in 1:length(ids)){
+  tmp <- subset(humor, is.element(humor$StudieID, ids[i]))
+  item[i,1:length(tmp[,n])] <- as.numeric(as.vector(tmp[,n]))
+}
 
+item$ID <- ids
+dem <- demogr[,c('ID', 'group')]
+dat <- merge(dem, item, by='ID', all=T)
+mdata <- melt(dat, id=c('ID', 'group'))
+mdata$variable<-as.numeric(as.vector(mdata$variable))
+
+mdata <- mdata[complete.cases(mdata),]
+ggplot(mdata) + 
+  stat_smooth(aes(x = variable, y = value, color=group), method = "loess", se = T, size=3, span=0.95, data=mdata) +
+  coord_cartesian(ylim = c(1, 10)) +
+  theme(text = element_text(size=30),
+        axis.text.x = element_text(angle=0, hjust=1))
+
+modME <- lme(value~group*variable,data=mdata, random=~1|ID,na.action=na.exclude)
+summary(modME)
+modFE <- glm(value~group*variable,data=mdata, na.action=na.exclude)
+summary(modFE)
+colnames(humor)[n]
