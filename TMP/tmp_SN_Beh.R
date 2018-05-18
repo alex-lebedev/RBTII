@@ -138,6 +138,8 @@ cor(c(s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']),c(s1$SR[s1$visit=='V2']
 # tTSW~SNvol
 cor(c(s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']),c(s1$tTSW[s1$visit=='V2']-s1$tTSW[s1$visit=='V1']), use='complete')
 
+
+
 # Plot:
 SNvolume.change <- ddd_tot$SNvol[s1$visit=='V2']-ddd_tot$SNvol[ddd_tot$visit=='V1']
 Performance.change <- ddd_tot$SR[s1$visit=='V2']-ddd_tot$SR[ddd_tot$visit=='V1']
@@ -149,13 +151,13 @@ summary(glm(Performance.change~SNvolume.change))$coeff
 s1 <- subset(ddd_tot, ddd_tot$group=='con')
 SNvolume.change <- s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']
 Performance.change <- s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']
-points(SNvolume.change,Performance.change, col=1, pch=2, cex=5)
+points(SNvolume.change,Performance.change, col=   "#00BFC4"  , pch=17, cex=5)
 cor(SNvolume.change, Performance.change)
 
 s1 <- subset(ddd_tot, ddd_tot$group=='act')
 SNvolume.change <- s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']
 Performance.change <- s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']
-points(SNvolume.change,Performance.change, col=1, pch=16, cex=6)
+points(SNvolume.change,Performance.change, col='#F8766D', pch=16, cex=6)
 cor(SNvolume.change, Performance.change)
 
 
@@ -171,8 +173,8 @@ dat_long <- data.frame(ID=as.factor(rep(scogdat$ID, 2)),
                        visit=as.factor(c(rep('V1',dim(scogdat)[1]),rep('V2',dim(scogdat)[1]))),
                        beh=c(scogdat[,var1],scogdat[,var2]))
 p <- ggplot(data = dat_long, aes(x = visit, y = beh, group = ID))
-p + geom_line(aes(linetype= group),colour='darkgrey')  + stat_smooth(aes(group = group, linetype= group),colour='black', size=3) +
-  stat_summary(aes(group = group, shape = group),geom = "point", fun.y = mean, size = 6)+ theme_bw() +
+p + geom_line(aes(linetype= group,colour=group))  + stat_smooth(aes(group = group, linetype= group,colour=group, fill=group), size=3) +
+  stat_summary(aes(group = group, shape = group, colour=group),geom = "point", fun.y = mean, size = 6)+ theme_bw() +
   theme(axis.text=element_text(size=20), axis.title.x=element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.border = element_blank(),axis.text.x=element_blank(), axis.ticks.x=element_blank())  +
@@ -186,8 +188,8 @@ ddd_tot$shape[ddd_tot$group=='act'] <- 16
 ddd_tot$shape <- as.factor(ddd_tot$shape)
 # STN Volume:
 p <- ggplot(data = ddd_tot, aes(x = visit, y = SNvol, group = ID))
-p + geom_line(aes(linetype= group),colour='darkgrey')  + stat_smooth(aes(group = group, linetype= group),colour='black', size=3) +
-  stat_summary(aes(group = group),shape=c(rep(16,2),rep(2,2)), geom = "point", fun.y = mean, size = 9)+ theme_bw() +
+p + geom_line(aes(linetype= group,colour=group))  + stat_smooth(aes(group = group, linetype=group, colour=group, fill=group),size=3) +
+  stat_summary(aes(group = group,shape=group,colour=group), geom = "point", fun.y = mean, size = 9)+ theme_bw() +
   theme(axis.text=element_text(size=20), axis.title.x=element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.border = element_blank(),axis.text.x=element_blank(), axis.ticks.x=element_blank())  +
