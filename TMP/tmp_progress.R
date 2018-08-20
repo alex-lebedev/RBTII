@@ -25,11 +25,48 @@ for(i in 1:dim(nb)[1]){
   upd[i,'nsess'] <- length(upd[i,3:dim(upd)[2]][!is.na(upd[i,3:dim(upd)[2]])])
 }
 
-# Run
+# Run (max level):
 dat <- upd
 dat <- subset(dat,is.element(dat$ID, rand$ID))
 ids <- dat$ID
+tab <- dat
+tab <- dat[,2:dim(dat)[2]]
+tab <- merge(tab, rand, by='ID')
+tab$maxlvl <- as.numeric(tab$maxlvl)
+tab$Age <- as.numeric(as.vector(tab$Age))
+tab$task <- 'upd'
+tab_upd <- tab
 
+dat <- tsw
+dat <- subset(dat,is.element(dat$ID, rand$ID))
+ids <- dat$ID
+tab <- dat
+tab <- dat[,2:dim(dat)[2]]
+tab <- merge(tab, rand, by='ID')
+tab$maxlvl <- as.numeric(tab$maxlvl)
+tab$Age <- as.numeric(as.vector(tab$Age))
+tab$task <- 'tsw'
+tab_tsw <- tab
+
+dat <- nb
+dat <- subset(dat,is.element(dat$ID, rand$ID))
+ids <- dat$ID
+tab <- dat
+tab <- dat[,2:dim(dat)[2]]
+tab <- merge(tab, rand, by='ID')
+tab$maxlvl <- as.numeric(tab$maxlvl)
+tab$Age <- as.numeric(as.vector(tab$Age))
+tab$task <- 'nb'
+tab_nb <- tab
+tab <- rbind(tab_nb,tab_tsw,tab_upd)
+
+modME <- lme(maxlvl~group+Age,data=tab, random=~1|task, na.action = na.omit)
+summary(modME)
+
+# Run (progress):
+dat <- upd
+dat <- subset(dat,is.element(dat$ID, rand$ID))
+ids <- dat$ID
 tab <- dat
 tab <- dat[,2:dim(dat)[2]]
 tabr <- as.data.frame(matrix(NA, c(1:20)+20*(length(ids)-1),3))
@@ -49,14 +86,22 @@ p + stat_smooth(aes(group = group, linetype=group, colour=group, fill=group),siz
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.border = element_blank(),axis.ticks.x=element_blank())  +
   ylab("Level")
+tabr_upd <- tabr
+tabr$Age <- as.numeric(as.vector(tabr$Age))
 
-modME <- lme(Level~group*Visit,data=tabr, random=~1|ID, na.action = na.omit)
+modME <- lme(Level~group*Visit+Age,data=tabr, random=~1|ID, na.action = na.omit)
 summary(modME)
 
+tabr_nb$Age <- as.numeric(as.vector(tabr_nb$Age))
+tabr_upd$Age <- as.numeric(as.vector(tabr_upd$Age))
+tabr_tsw$Age <- as.numeric(as.vector(tabr_tsw$Age))
 tabr <- rbind(tabr_upd,tabr_nb, tabr_tsw)
 tabr$task <- as.factor(c(rep('upd', dim(tabr_upd)[1]),rep('nb', dim(tabr_nb)[1]),rep('tsw', dim(tabr_tsw)[1])))
 
-modME <- lme(Level~group*Visit,data=tabr, random=~1|task, na.action = na.omit)
+modME <- lme(fixed = Level~group*Visit+Age+sex+Session, random = ~ Visit|ID/task,data=tabr, na.action = na.omit)
+summary(modME)
+
+modME <- lme(fixed = Level~group*Visit+Age+sex+Session, random = ~ 1|ID,data=tabr_nb, na.action = na.omit)
 summary(modME)
 
 

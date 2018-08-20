@@ -300,9 +300,20 @@ nb <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_
 tsw <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_tsw.xlsx',1)
 upd <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/progress/debrief/progress_data/progress_upd.xlsx',1)
 
-# Read randomization data for a relevant wave:
-rand <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave3.xlsx',1)
+nb[,3:dim(nb)[2]] <- apply(nb[,3:dim(nb)[2]],c(1,2),as.numeric,as.vector)
+tsw[,3:dim(tsw)[2]] <- apply(tsw[,3:dim(tsw)[2]],c(1,2),as.numeric,as.vector)
+upd[,3:dim(upd)[2]] <- apply(upd[,3:dim(upd)[2]],c(1,2),as.numeric,as.vector)
 
+
+# Read randomization data for a relevant wave:
+rand1 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave1.xlsx',1)
+rand2 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave2.xlsx',1)
+rand3 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave3.xlsx',1)
+rand4 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave4.xlsx',1)
+rand5 <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/randomization/RandomizedWave5.xlsx',1)
+
+#rand <- rbind(rand1,rand2,rand3,rand4,rand5)
+rand <- rand5
 
 # Run
 dat <- nb
@@ -310,7 +321,7 @@ dat <- subset(dat,is.element(dat$ID, rand$stuID))
 ids <- dat$ID
 
 tab <- dat
-
+tab <- dat[,2:dim(dat)[2]]
 tabr <- as.data.frame(matrix(NA, c(1:20)+20*(length(ids)-1),3))
 colnames(tabr) <- c('id', 'Nivå', 'Besök')
 
@@ -318,6 +329,7 @@ for (i in 1:length(ids)){
   tabr[c(1:20)+20*(i-1),1] <- ids[i]
   tabr[c(1:20)+20*(i-1),2] <- t(tab[i,2:21])
   tabr[c(1:20)+20*(i-1),3] <- c(1:20)
+  tabr
 }
 
 

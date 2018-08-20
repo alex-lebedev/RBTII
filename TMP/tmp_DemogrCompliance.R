@@ -28,10 +28,12 @@ upd[,3:dim(upd)[2]] <- apply(upd[,3:dim(upd)[2]],2,as.numeric)
 rand <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/demographics/rand.xlsx',1)
 
 for(i in 1:dim(nb)[1]){
-  nb[i,'nsess'] <- length(nb[i,3:dim(nb)[2]][!is.na(nb[i,3:dim(nb)[2]])])
+  nb[i,'maxlvl']<- max(nb[i,3:dim(nb)[2]], na.rm=T)
+  nb[i,'nsess'] <- length(nb[i,3:dim(nb)[2]][!is.na(nb[i,3:dim(nb)[2]])])-1
 }
 dd <- merge(rand, nb[,c('ID', 'nsess')], by='ID')
 
+mean(dd$nsess);sd(dd$nsess)
 mean(dd$nsess[dd$group=='con']);sd(dd$nsess[dd$group=='con'])
 mean(dd$nsess[dd$group=='act']);sd(dd$nsess[dd$group=='act'])
 
