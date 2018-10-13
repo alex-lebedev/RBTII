@@ -112,7 +112,7 @@ aseg <- read.delim('/Volumes/REBOOTII/RBTII/PROCESSED/FSDIR/qdec/stats_tables/as
 aparc_lh <- read.delim('/Volumes/REBOOTII/RBTII/PROCESSED/FSDIR/qdec/stats_tables/aparc_stats_lh.txt')
 aparc_rh <- read.delim('/Volumes/REBOOTII/RBTII/PROCESSED/FSDIR/qdec/stats_tables/aparc_stats_rh.txt')
 
-stats <- aparc_lh
+stats <- cbind(aparc_lh,aparc_rh, aseg)
 
 
 for (i in 1:dim(stats)[1]){
@@ -120,6 +120,7 @@ for (i in 1:dim(stats)[1]){
                                    split='_[1-2].long.')[[1]][1],split='sub-')[[1]][2]
 }
 stats$visit <- rep(c(1,2),dim(stats)[1]/2)
+
 
 
 df <- as.data.frame(merge(stats,dat, by='ID'))

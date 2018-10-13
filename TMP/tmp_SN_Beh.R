@@ -128,6 +128,9 @@ colnames(ddd_tot)[c(3,6)] <- c('tTSW', 'group')
 
 s1 <- subset(ddd_tot, ddd_tot$group=='con')
 
+# SR~tTSW
+cor(c(s1$tTSW[s1$visit=='V2']-s1$tTSW[s1$visit=='V1']),c(s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']), use='complete')
+
 
 # SR~SNvol
 cor(c(s1$SNvol[s1$visit=='V2']-s1$SNvol[s1$visit=='V1']),c(s1$SR[s1$visit=='V2']-s1$SR[s1$visit=='V1']), use='complete')

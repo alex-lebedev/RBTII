@@ -149,9 +149,10 @@ dat_long <- data.frame(ID=as.factor(rep(dat$ID, 3)),
                        G=as.factor(rep(dat$G, 3)),
                        visit=as.factor(c(rep('V1',dim(dat)[1]),rep('V2',dim(dat)[1]),rep('V3',dim(dat)[1]))),
                        beh=c(dat[,var1],dat[,var2],dat[,var3]))
+
 p <- ggplot(data = dat_long, aes(x = visit, y = beh, group = ID))
-p + geom_line(aes(color= G))  + stat_summary(aes(group = G, color=G, shape = G), 
-                                             geom = "point", fun.y = mean, size = 5)+
+p + geom_line(aes(color= G, linetype=G),size=0.5)  + stat_summary(aes(group = G, color=G, shape = G), 
+                                                                  geom = "point", fun.y = mean, size = 5)+
   stat_smooth(aes(group = G, linetype=G, colour=G, fill=G),size=3) +
   theme_bw() + theme(axis.text=element_text(size=20), axis.title.x=element_blank(),
                      panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
