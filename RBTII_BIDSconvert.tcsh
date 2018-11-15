@@ -1,9 +1,7 @@
-#!tcsh
-
 #==============================#
 #=== RBTII_BIDSconvert.tcsh ===#
 #==============================#
-
+#!tcsh
 # The script reads out raw DICOM data from REBOOT-II, converts it to NIFTI
 # and reorganizes the folders according to BIDS (longitudinal) format
 
