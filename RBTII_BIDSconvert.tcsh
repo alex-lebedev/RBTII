@@ -98,6 +98,7 @@ foreach i ($subjs)
 	mv NIFTI/sub-$snam/ses-posttrain/dwi/*ddiff*.nii.gz NIFTI/sub-$snam/ses-posttrain/dwi/sub-$snam\_\ses-posttrain_dwi.nii.gz
 	mv NIFTI/sub-$snam/ses-posttrain/dwi/*.bvec NIFTI/sub-$snam/ses-posttrain/dwi/sub-$snam\_\ses-posttrain_dwi.bvec
 	mv NIFTI/sub-$snam/ses-posttrain/dwi/*.bval NIFTI/sub-$snam/ses-posttrain/dwi/sub-$snam\_\ses-posttrain_dwi.bval
+	
 	# GREposttrain
 	/usr/local/mricron/dcm2nii -o NIFTI/sub-$snam/ses-posttrain/fmap DCM/*/V2/$snam*/*Forskning_Ki_Reboot_*/gre_field_mapping*/IM-*-0001*
 	mv NIFTI/sub-$snam/ses-posttrain/fmap/*grefieldmapping*.nii.gz NIFTI/sub-$snam/ses-posttrain/fmap/sub-$snam\_\ses-posttrain_phasediff.nii.gz
