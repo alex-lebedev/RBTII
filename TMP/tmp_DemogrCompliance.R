@@ -37,6 +37,29 @@ mean(dd$nsess);sd(dd$nsess)
 mean(dd$nsess[dd$group=='con']);sd(dd$nsess[dd$group=='con'])
 mean(dd$nsess[dd$group=='act']);sd(dd$nsess[dd$group=='act'])
 
+# MMSE and Education:
+rand <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/demographics/rand.xlsx',1)
+education <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/demographics/education_MMSE.xlsx',1)
+mmse <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/demographics/education_MMSE.xlsx',2)
+
+
+dd <- merge(rand, education, by='ID')
+dd <- merge(dd, mmse, by='ID')
+
+colnames(dd)[7:9] <- c('education', 'MMSE1', 'MMSE2')
+
+dd[,7:9] <- apply(dd[,7:9], 2, as.numeric, as.vector)
+
+
+median(dd$education[dd$group=='con'], na.rm=T);range(dd$education[dd$group=='con'], na.rm=T)
+median(dd$education[dd$group=='act'], na.rm=T);range(dd$education[dd$group=='act'], na.rm=T)
+wilcox.test(dd$education[dd$group=='con'],dd$education[dd$group=='act'])
+
+
+median(dd$MMSE2[dd$group=='con'], na.rm=T);range(dd$MMSE2[dd$group=='con'], na.rm=T)
+median(dd$MMSE2[dd$group=='act'], na.rm=T);range(dd$MMSE2[dd$group=='act'], na.rm=T)
+wilcox.test(dd$MMSE2[dd$group=='con'],dd$MMSE2[dd$group=='act'])
+
 #####################
 ### II. COGNITION ###
 #####################

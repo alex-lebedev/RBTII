@@ -86,11 +86,13 @@ p + stat_smooth(aes(group = group, linetype=group, colour=group, fill=group),siz
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.border = element_blank(),axis.ticks.x=element_blank())  +
   ylab("Level")
-tabr_upd <- tabr
 tabr$Age <- as.numeric(as.vector(tabr$Age))
+tabr_upd <- tabr
 
 modME <- lme(Level~group*Visit+Age,data=tabr, random=~1|ID, na.action = na.omit)
 summary(modME)
+modLMER <- lmer(Level ~ 1 + group*Visit + (1+Visit|ID), tabr_nb)
+summary(modLMER)
 
 tabr_nb$Age <- as.numeric(as.vector(tabr_nb$Age))
 tabr_upd$Age <- as.numeric(as.vector(tabr_upd$Age))

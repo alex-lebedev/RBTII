@@ -8,7 +8,6 @@ color <- brewer.pal(n = 8, "Dark2")
 
 gmv <- readMat('/Volumes/REBOOTII/RBTII/ANALYSIS/GMV/FINAL/FullFact_cleaned/STN_vol_F.mat')$Y
 
-
 group <- c(rep(rep('con',27),2),rep(rep('act',28),2))
 visit <- c(rep('V1',27),rep('V2',27),rep('V1',28),rep('V2',28))
 

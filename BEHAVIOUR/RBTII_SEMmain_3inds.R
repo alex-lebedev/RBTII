@@ -314,8 +314,10 @@ summary(fm4g, fit.measures=TRUE, standardized=F)
 ### Secondary End-Points ###
 ############################
 
-# TRAINED TASK-SWITCHING:
+# TRAINED AND NEAR TASK-SWITCHING:
 #dat <- scogdat[,c('G','v1.trainedTSW.lvl23.cost', 'v2.trainedTSW.lvl23.cost', 'v1.trainedTSW.lvl456.cost', 'v2.trainedTSW.lvl456.cost', 'v1.trainedTSW.lvl789.cost', 'v2.trainedTSW.lvl789.cost')]
+#dat <- scogdat[,c('G','v1.nearTSW.lvl23.cost', 'v2.nearTSW.lvl23.cost', 'v1.nearTSW.lvl456.cost', 'v2.nearTSW.lvl456.cost', 'v1.nearTSW.lvl789.cost', 'v2.nearTSW.lvl789.cost')]
+
 x1 <- as.numeric(as.vector(dat[,2]))
 x2 <- as.numeric(as.vector(dat[,3]))
 y1 <- as.numeric(as.vector(dat[,4]))
@@ -329,20 +331,6 @@ y1 <- (y1-min(na.exclude(y1)))^1/2
 z2 <- (z2-min(na.exclude(z2)))^1/2
 z1 <- (z1-min(na.exclude(z1)))^1/2
 
-# NEAR TASK-SWITCHING:
-#dat <- scogdat[,c('G','v1.nearTSW.lvl23.cost', 'v2.nearTSW.lvl23.cost', 'v1.nearTSW.lvl456.cost', 'v2.nearTSW.lvl456.cost', 'v1.nearTSW.lvl789.cost', 'v2.nearTSW.lvl789.cost')]
-x1 <- as.numeric(as.vector(dat[,2]))
-x2 <- as.numeric(as.vector(dat[,3]))
-y1 <- as.numeric(as.vector(dat[,4]))
-y2 <- as.numeric(as.vector(dat[,5]))
-z1 <- as.numeric(as.vector(dat[,6]))
-z2 <- as.numeric(as.vector(dat[,7]))
-x2 <- log1p(x2-min(na.exclude(x2)))
-x1 <- log1p(x1-min(na.exclude(x1)))
-y2 <- log1p(y2-min(na.exclude(y2)))
-y1 <- log1p(y1-min(na.exclude(y1)))
-z2 <- log1p(z2-min(na.exclude(z2)))
-z1 <- log1p(z1-min(na.exclude(z1)))
 
 #############
 ### PLOTS ###

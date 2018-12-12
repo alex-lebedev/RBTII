@@ -11,27 +11,41 @@ load(paste(dir, 'cogdat_cleaned.rda', sep=''))
 # CHECK:
 #cor(scogdat[,c('v1.fl1.cost.3root','v1.fl2.cost', 'v1.nearRSW1.cost', 'v1.nearRSW2.cost', 'v1.nearTSW.cost')], use='complete')
 
-excluded <- c('3035', '5037')
+#excluded <- c('3035', '5037')
 #excluded <- c('3035', '5037', '5069')
 #scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F & cogdat_cleaned$PCAoutlier == 'No')
-scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F)
+#scogdat <- subset(cogdat_cleaned, is.element(cogdat_cleaned$ID, excluded)==F)
+scogdat <- cogdat_cleaned
+scogdat$v1.NBACKtrained <- apply(scogdat[,c('trained2back.OA.v1', 'trained3back.OA.v1')],1, mean)
+scogdat$v2.NBACKtrained <- apply(scogdat[,c('trained2back.OA.v2', 'trained3back.OA.v2')],1, mean)
+scogdat$v1.NBACKnear <- apply(scogdat[,c('near2back.OA.v1', 'near3back.OA.v1')],1, mean)
+scogdat$v2.NBACKnear <- apply(scogdat[,c('near2back.OA.v2', 'near3back.OA.v2')],1, mean)
+scogdat <- cogdat_cleaned
 scogdat$G[scogdat$group=='con'] <- 0
 scogdat$G[scogdat$group=='act'] <- 1
 scogdat$G <- as.factor(scogdat$G)
 
+# Calculate averaged updating performance:
 scogdat$v1.NearUPD <- apply(scogdat[,c('v1.nearUpd.count.lvl2', 'v1.nearUpd.count.lvl4')],1, mean)
 scogdat$v2.NearUPD <- apply(scogdat[,c('v2.nearUpd.count.lvl2', 'v2.nearUpd.count.lvl4')],1, mean)
 scogdat$v1.TrainedUPD <- apply(scogdat[,c('v1.trainedUpd.count.lvl2', 'v1.trainedUpd.count.lvl4')],1, mean)
 scogdat$v2.TrainedUPD <- apply(scogdat[,c('v2.trainedUpd.count.lvl2', 'v2.trainedUpd.count.lvl4')],1, mean)
 
+
 # UPDATING:
 #dat <- scogdat[,c('G','v1.NearUPD', 'v2.NearUPD', 'near3back.OA.v1', 'near3back.OA.v2')]
 #dat <- scogdat[,c('G','v1.TrainedUPD', 'v2.TrainedUPD', 'trained3back.OA.v1', 'trained3back.OA.v2')]
-x1 <- log1p(as.numeric(as.vector(dat[,2])))
-x2 <- log1p(as.numeric(as.vector(dat[,3])))
+#dat <- scogdat[,c('G','v1.srec', 'v2.srec', 'v1.vrec', 'v2.vrec')]
+#x1 <- log1p(as.numeric(as.vector(dat[,2])))
+#x2 <- log1p(as.numeric(as.vector(dat[,3])))
+#y1 <- as.numeric(as.vector(dat[,4]))
+#y2 <- as.numeric(as.vector(dat[,5]))
+
+# No transform:
+x1 <- as.numeric(as.vector(dat[,2]))
+x2 <- as.numeric(as.vector(dat[,3]))
 y1 <- as.numeric(as.vector(dat[,4]))
 y2 <- as.numeric(as.vector(dat[,5]))
-
 
 # RULE-SWITCHING:
 dat <- scogdat[,c('G','v1.nearRSW1.cost', 'v2.nearRSW1.cost', 'v1.nearRSW2.cost', 'v2.nearRSW2.cost')]
@@ -74,22 +88,25 @@ modME <- lme(var~group*visit,data=ddd, random=~1|ID)
 summary(modME)
 
 
+############################
+### Prepare data for SEM ###
+############################
 
-
-
-
-
-#apply(dat[,2:7],2,scale)
-
-
-###############################
-
-# Prepare data frame:
+x1 <- as.numeric(as.vector(dat[,2]))
+x2 <- as.numeric(as.vector(dat[,3]))
+y1 <- as.numeric(as.vector(dat[,4]))
+y2 <- as.numeric(as.vector(dat[,5]))
 
 G <- dat$G
-work <- as.data.frame(cbind(x1,x2,y1,y2,G))
-#work <- work[complete.cases(work),]
-work$G <- as.factor(G)
+work <- as.data.frame(cbind(x1,y1,x2,y2,G))
+work$G <- as.factor(work$G)
+
+# Scale the data for standardized effect-sizes:
+work$x2 <- (work$x2-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
+work$x1 <- (work$x1-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
+work$y2 <- (work$y2-mean(work$y1, na.rm=T))/sd(work$y1, na.rm=T)
+work$y1 <- (work$y1-mean(work$y1, na.rm=T))/sd(work$y1, na.rm=T)
+
 
 # I. Model Specification:
 
@@ -302,10 +319,10 @@ fm2 <- sem(m2, data=work, estimator='ml', missing='FIML')
 fm3 <- sem(m3, data=work, estimator='ml', missing='FIML')
 fm4 <- sem(m4, data=work, estimator='ml', missing='FIML')
 
-summary(fm1, fit.measures=TRUE, standardized=TRUE)
-summary(fm2, fit.measures=TRUE, standardized=TRUE)
-summary(fm3, fit.measures=TRUE, standardized=TRUE)
-summary(fm4, fit.measures=TRUE, standardized=TRUE)
+#summary(fm1, fit.measures=TRUE, standardized=TRUE)
+#summary(fm2, fit.measures=TRUE, standardized=TRUE)
+#summary(fm3, fit.measures=TRUE, standardized=TRUE)
+#summary(fm4, fit.measures=TRUE, standardized=TRUE)
 
 
 #To run chi2 diff tests

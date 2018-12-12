@@ -165,3 +165,15 @@ summary(modME)
 modFE <- glm(value~group*variable,data=mdata, na.action=na.exclude)
 summary(modFE)
 colnames(humor)[n]
+
+#Blinding:
+blinding <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/blinding.xlsx',1)
+rand <- read.xlsx2('/Users/alebedev/Documents/R/REBOOT2/main_analysis/demographics/rand.xlsx',1)
+
+blind_dat <- merge(blinding, rand, by='ID')
+blind_dat <- blind_dat[blind_dat$guess!=-1,]
+
+blind_dat$guess <- as.numeric(blind_dat$guess)
+
+guess <- table(blind_dat$guess, blind_dat$group)
+chisq.test(guess)
