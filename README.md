@@ -2,7 +2,7 @@
 Scripts used in REBOOT-II data analysis
 ---
 #### Author: Alexander V. Lebedev 
-#### Date: 2017-12-04
+#### Date: 2018-12-04
 #### OSF entry: https://osf.io/aam9u/
 #### EudraCT entry: https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-000891-54/SE
 ---
