@@ -339,4 +339,9 @@ ggplot(tabr) +
   coord_cartesian(ylim = c(0, 20)) +
   theme(text = element_text(size=30),
         axis.text.x = element_text(angle=0, hjust=1))
+
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<
+
  

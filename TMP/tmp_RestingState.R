@@ -169,3 +169,6 @@ si <- c(df$SI[df$visit==2 & df$group==g]-df$SI[df$visit==1 & df$group==g])
 fc <- c(df[(df$visit==2 & df$group==g),n]-df[(df$visit==1 & df$group==g),n])
 cor(fc, si)
 
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<

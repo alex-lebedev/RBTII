@@ -1,7 +1,15 @@
-############################
-## SEM for REBOOTII data: ##
-##  (6-month follow-up)   ##
-############################
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# >>> RBTII_SEMmain_6m-follow-up.R  >>>
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# Authors: Alexander V. Lebedev & Martin Lovden
+# Date: 2017-12-04
+# Study: REBOOT-II (OSF: https://osf.io/aam9u/)
+
+'
+Analysis of the primary outcomes in the REBOOT-II RCT (6-months follow-up data)
+'
+
 
 # Authors: Alexander V. Lebedev & Martin Lovden
 # Date: 2018-05-25
@@ -299,3 +307,6 @@ anova(fm1,fm2,fm3,fm4) # based on Chisq
 fm4g <- sem(m4g, data=work, estimator='ml', missing='FIML')
 summary(fm4g, fit.measures=TRUE, standardized=F)
 
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<

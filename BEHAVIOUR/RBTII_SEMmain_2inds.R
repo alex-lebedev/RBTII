@@ -1,3 +1,17 @@
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# >>> RBTII_SEMmain_2inds.R  >>>
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# Authors: Alexander V. Lebedev & Martin Lovden
+# Date: 2017-12-04
+# Study: REBOOT-II (OSF: https://osf.io/aam9u/)
+# Version for 2 indicators
+
+'
+Analysis of the primary outcomes in the REBOOT-II RCT
+- Version for 2 indicators
+'
+
 library(lavaan)
 library(xlsx)
 library(ggplot2)
@@ -97,9 +111,8 @@ x2 <- as.numeric(as.vector(dat[,3]))
 y1 <- as.numeric(as.vector(dat[,4]))
 y2 <- as.numeric(as.vector(dat[,5]))
 
-G <- dat$G
-work <- as.data.frame(cbind(x1,y1,x2,y2,G))
-work$G <- as.factor(work$G)
+work <- as.data.frame(cbind(x1,y1,x2,y2))
+work$G <- as.numeric(as.vector(G))
 
 # Scale the data for standardized effect-sizes:
 work$x2 <- (work$x2-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
@@ -331,3 +344,7 @@ anova(fm1,fm2,fm3,fm4) # based on Chisq
 # Run appropriate model:
 fm4g <- sem(m4g, data=work, estimator='ml', missing='FIML')
 summary(fm4g, fit.measures=TRUE, standardized=TRUE)
+
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<

@@ -64,3 +64,7 @@ d <- data.frame(ID = as.factor(rep(ddd$ID,2)), group = as.factor(rep(ddd$group,2
                 dbp = rep(ddd$Diastolic.Blood.Pressure..mmHg.,2),
                 bmi = rep(ddd$bmi,2), visit = c(rep(1, length(ddd$ID)),rep(2, length(ddd$ID))))
 
+
+# Borderline-significant (p=0.07) groupcon:visit:bmi within-subject effect:
+modME <- lme(SR~group*visit*bmi,data=d, random=~1|ID)
+summary(modME)

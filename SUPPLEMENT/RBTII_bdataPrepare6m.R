@@ -471,3 +471,7 @@ cogdat6m$ID <- as.factor(cogdat6m$ID)
 
 save(cogdat6m, file=paste(dir, 'summary/', 'cogdat6m.rda', sep=''))
 
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<
+

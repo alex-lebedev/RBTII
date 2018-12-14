@@ -1,6 +1,15 @@
-#######################
-# Outlier detection ###
-#######################
+# >>>>>>>>>>>>>>>>>>>>>>>>>>
+# >>> RBTII_dcleaning.R >>>
+# >>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# Authors: Alexander V. Lebedev & Martin Lovden
+# Date: 2018-06-14
+# Study: REBOOT-II (OSF: https://osf.io/aam9u/)
+
+'
+Data cleaning and outlier detection
+'
+
 
 # Load libraries:
 library(xlsx)
@@ -334,6 +343,8 @@ text(pc12, labels=c(1:dim(pc12)[1]), cex= 0.7, offset = 10)
 cogdat_cleaned$PCAoutlier <- 'No'
 
 save('cogdat_cleaned', 'persdat', file=paste(dir, 'cogdat_cleaned.rda', sep=''))
-
-
 save('cogdat_cleaned', 'persdat', file=paste(dir, 'cogdat_cleaned.rda', sep=''))
+
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<

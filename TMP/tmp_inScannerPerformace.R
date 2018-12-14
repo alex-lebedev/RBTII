@@ -387,4 +387,6 @@ modME <- lme(perf~group*load*visit,data=d, random=~1|ID)
 summary(modME)
 
 
-
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<

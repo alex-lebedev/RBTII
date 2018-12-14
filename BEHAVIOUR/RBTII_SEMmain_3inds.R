@@ -1,10 +1,17 @@
-#############################
-## SEM for REBOOTII data: ###
-#############################
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# >>> RBTII_SEMmain_3inds.R  >>>
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Authors: Alexander V. Lebedev & Martin Lovden
 # Date: 2017-12-04
+# Study: REBOOT-II (OSF: https://osf.io/aam9u/)
 # Version for 3 indicators
+
+'
+Analysis of the primary outcomes in the REBOOT-II RCT
+ - Version for 3 indicators
+'
+
 
 # Load Libraries:
 library(lavaan)
@@ -51,9 +58,8 @@ y1 <- as.numeric(as.vector(dat[,4]))
 y2 <- as.numeric(as.vector(dat[,5]))
 z1 <- as.numeric(as.vector(dat[,6]))
 z2 <- as.numeric(as.vector(dat[,7]))
-G <- dat$G
-work <- as.data.frame(cbind(x1,y1,z1,x2,y2,z2,G))
-work$G <- as.factor(work$G)
+work <- as.data.frame(cbind(x1,y1,z1,x2,y2,z2))
+work$G <- as.numeric(as.vector(dat$G))
 
 # Scale the data for standardized effect-sizes:
 work$x2 <- (work$x2-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
@@ -330,6 +336,16 @@ y2 <- (y2-min(na.exclude(y2)))^1/2
 y1 <- (y1-min(na.exclude(y1)))^1/2
 z2 <- (z2-min(na.exclude(z2)))^1/2
 z1 <- (z1-min(na.exclude(z1)))^1/2
+work <- as.data.frame(cbind(x1,y1,z1,x2,y2,z2))
+work$G <- as.numeric(as.vector(dat$G))
+
+# Scale the data for standardized effect-sizes:
+work$x2 <- (work$x2-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
+work$x1 <- (work$x1-mean(work$x1, na.rm=T))/sd(work$x1, na.rm=T)
+work$y2 <- (work$y2-mean(work$y1, na.rm=T))/sd(work$y1, na.rm=T)
+work$y1 <- (work$y1-mean(work$y1, na.rm=T))/sd(work$y1, na.rm=T)
+work$z2 <- (work$z2-mean(work$z1, na.rm=T))/sd(work$z1, na.rm=T)
+work$z1 <- (work$z1-mean(work$z1, na.rm=T))/sd(work$z1, na.rm=T)
 
 
 #############
@@ -343,5 +359,6 @@ library(semPlot)
 semPaths(fm4g)
 # A simplified version is provided in the paper supplement.
 
-
-# REFERENCE: http://sachaepskamp.com/semPlot/examples
+# <<<<<<<<<<<<<<<
+# <<< THE END <<<
+# <<<<<<<<<<<<<<<
