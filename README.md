@@ -1,8 +1,8 @@
 # REBOOT-II scripts
 Scripts used in REBOOT-II data analysis
-# Authors: Alexander V. Lebedev & Martin Lovden
-# Date: 2017-12-04
-# Study: REBOOT-II (OSF: https://osf.io/aam9u/)
+### Authors: Alexander V. Lebedev & Martin Lovden
+### Date: 2017-12-04
+### Study: REBOOT-II (OSF: https://osf.io/aam9u/)
 
 ## ... / BEHAVIOUR
 \
