@@ -1,4 +1,4 @@
-# REBOOT-II: data analysis
+# REBOOT-II Data Analysis
 Scripts used in REBOOT-II data analysis
 ---
 #### Author: Alexander V. Lebedev 
