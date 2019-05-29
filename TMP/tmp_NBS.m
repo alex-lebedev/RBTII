@@ -30,25 +30,25 @@ thld=thlds(t);
       load(mfliesRS1{i})
       adjMrs1(:,:,i)= corrcoef(ROISignals(:,ind));
       %adjMrs1(adjMrs1<thld)=0;
-      str1(i,:) = strengths_und(adjMrs1(:,:,i));
+      str1(i,:) = betweenness_wei(adjMrs1(:,:,i));
+      [sink Q1(i)] = community_louvain(adjMrs1(:,:,i));
     clear ROISignals
       %%%%%%%%%%%%%%%
       load(mfliesRS2{i})
       adjMrs2(:,:,i)= corrcoef(ROISignals(:,ind)); 
       %adjMrs2(adjMrs2<thld)=0;
-      str2(i,:) = strengths_und(adjMrs2(:,:,i));
+      str2(i,:) = betweenness_wei(adjMrs2(:,:,i));
+      [sink Q2(i)] = community_louvain(adjMrs2(:,:,i));
       clear ROISignals
       %%%%%%%%%%%%%%%
     end
     
-adjM(:,:,:,1)=adjMrs1;
-adjM(:,:,:,2)=adjMrs2;
-adjM = mean(mean(adjM,4),3);
+%adjM(:,:,:,1)=adjMrs1;
+%adjM(:,:,:,2)=adjMrs2;
+%adjM = mean(mean(adjM,4),3);
+%[CI Q]=community_louvain(adjM,[],[], 'negative_sym')   % then re-run the loop above
 
-
-[CI Q]=community_louvain(adjM,[],[], 'negative_sym')   % then re-run the loop above
-
-save('/Volumes/REBOOTII/RBTII/PROCESSED/NBS/str_rest_fmriprepGlobal.mat', 'str1', 'str2', 'Ppos1','Ppos2')
+save('/Volumes/REBOOTII/RBTII/PROCESSED/NBS/str_rest_fmriprepGlobal.mat', 'str1', 'str2', 'Q1', 'Q2')
 
 adjMrs1(adjMrs1<thld)=0;
 adjMrs2(adjMrs2<thld)=0;
